@@ -1,0 +1,4 @@
+pronotepy @ git+https://github.com/ScorpionSage510/pronotepy.git
+Flask
+pandas
+matplotlib

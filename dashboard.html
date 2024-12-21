@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Tableau de bord Pronote</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f9;
+        }
+        .container {
+            max-width: 800px;
+            margin: 50px auto;
+            background: #fff;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+        form {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 20px;
+        }
+        select {
+            padding: 10px;
+            font-size: 16px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        button {
+            padding: 10px 20px;
+            font-size: 16px;
+            color: #fff;
+            background: #007bff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        button:hover {
+            background: #0056b3;
+        }
+        img {
+            display: block;
+            margin: 0 auto;
+            max-width: 100%;
+            height: auto;
+        }
+        .logout {
+            text-align: center;
+            margin-top: 20px;
+        }
+        .logout a {
+            text-decoration: none;
+            color: #007bff;
+            font-weight: bold;
+        }
+        .logout a:hover {
+            text-decoration: underline;
+            color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Tableau de bord Pronote</h1>
+        <form method="POST">
+            <label for="matiere">Choisissez une matière :</label>
+            <select name="matiere" id="matiere" onchange="this.form.submit()">
+                <option value="Toutes">Toutes</option>
+                {% for matiere in matieres %}
+                <option value="{{ matiere }}" {% if matiere == request.form.get('matiere', 'Toutes') %}selected{% endif %}>
+                    {{ matiere }}
+                </option>
+                {% endfor %}
+            </select>
+        </form>
+
+        <h2>Graphique des moyennes</h2>
+        {% if plot_url %}
+        <img src="data:image/png;base64,{{ plot_url }}" alt="Graphique des moyennes">
+        {% else %}
+        <p>Aucune donnée disponible pour la matière sélectionnée.</p>
+        {% endif %}
+
+        <div class="logout">
+            <a href="{{ url_for('logout') }}">Se déconnecter</a>
+        </div>
+    </div>
+</body>
+</html>
